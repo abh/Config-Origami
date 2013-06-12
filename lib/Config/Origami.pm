@@ -1,4 +1,7 @@
 package Config::Origami;
+{
+  $Config::Origami::VERSION = '0.001';
+}
 use Moose;
 use JSON;
 use File::Slurp qw(read_file);
@@ -21,9 +24,12 @@ sub BUILD {
     $config = $self->_load_file( $config, $self->config_path . "/defaults-override.json", 1);
     
     for my $k (keys %$config) {
-        $self->can($k)
-          ? $self->$k($config->{$k})
-          : $self->{$k} = $config->{$k};
+        if ($self->can($k)) {
+            $self->$k($config->{$k})
+        }
+        else {
+            $self->{$k} = $config->{$k};
+        }
     }
     return $self;
 }
