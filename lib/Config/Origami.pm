@@ -1,6 +1,6 @@
 package Config::Origami;
 {
-  $Config::Origami::VERSION = '0.001';
+  $Config::Origami::VERSION = '0.002';
 }
 use Moose;
 use JSON;
